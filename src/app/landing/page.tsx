@@ -1,12 +1,18 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 export default function Landing() {
+  const router = useRouter();
+
   const chkPlace = (formData: FormData) => {
     const place = formData.get("place");
 
+    if (typeof place !== "string") return false;
+
     if (place !== "서울특별시" && place !== "경기도") {
-      alert("타 지역을 추후 개시될 예정입니다.");
-      return;
+      alert("서울/경기를 제외한 타 지역은 추후 개시될 예정입니다.");
+      return false;
     }
 
     return true;
@@ -18,6 +24,12 @@ export default function Landing() {
     const ok = chkPlace(new FormData(e.currentTarget));
 
     if (!ok) return;
+
+    if (ok) {
+      if (confirm("서비스 개시 지역입니다. 계산 화면으로 넘어가시겠습니까?")) {
+        router.push("/calculate");
+      }
+    }
   };
 
   return (
