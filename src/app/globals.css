@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+:root {
+  --primary: #a5c89e;
+  --secondary: #aeb877;
+  --modal: #fffbb1;
+  --emphasize: #d8e983;
+}
+
+@theme {
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-modal: var(--modal);
+  --color-emphasize: var(--emphasize);
+}
