@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 export default function Landing() {
   const router = useRouter();
 
+  // 서울특별시 혹은 경기도를 체크한 것인지 확인
+  // 만약 서울 혹은 경기권이 아니라면 false를 반환하여 경고만 하도록 유도
   const chkPlace = (formData: FormData) => {
     const place = formData.get("place");
 
@@ -18,6 +20,8 @@ export default function Landing() {
     return true;
   };
 
+  // submit 행동 시 실행되는 함수
+  // chkPlace 함수를 통해 서울/경기권인지 확인 후 만약 맞다면 다음 페이지로 넘어갈지 결정하는 confirm 표시
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -34,6 +38,7 @@ export default function Landing() {
 
   return (
     <>
+      {/* select를 통해 드랍다운 구현*/}
       <form onSubmit={onSubmit} className="w-3/5 flex gap-20 mx-auto mt-20">
         <label htmlFor="placeDropdown" className="sr-only">
           라벨
