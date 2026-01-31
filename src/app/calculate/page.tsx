@@ -1,5 +1,5 @@
 import Link from "next/link";
-import RadioGroup from "./RadioGroup";
+import RadioGroup from "@/components/RadioGroup";
 
 export default function Calculate() {
   return (
