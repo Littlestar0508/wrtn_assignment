@@ -5,8 +5,16 @@ import RadioGroup from "@/components/RadioGroup";
 import { useUserSettingStore } from "@/store/useUserSettingStore";
 
 export default function Calculate() {
-  const { setHomeType, setResidents, setSmartMeter, setEvCharger } =
-    useUserSettingStore();
+  const {
+    setHomeType,
+    setResidents,
+    setSmartMeter,
+    setEvCharger,
+    homeType,
+    residents,
+    smartMeter,
+    evCharger,
+  } = useUserSettingStore();
 
   return (
     <>
@@ -22,6 +30,7 @@ export default function Calculate() {
           ]}
           ariaLabel="거주 유형"
           onChange={setHomeType}
+          value={homeType}
         />
 
         {/* 거주자 수 */}
@@ -37,6 +46,7 @@ export default function Calculate() {
           ]}
           ariaLabel="거주자 수"
           onChange={setResidents}
+          value={residents}
         />
 
         {/* 3) 스마트 미터기 */}
@@ -54,6 +64,7 @@ export default function Calculate() {
             </Link>
           }
           onChange={setSmartMeter}
+          value={smartMeter}
         />
 
         {/* 4) 전기차 충전기 */}
@@ -66,6 +77,7 @@ export default function Calculate() {
           ]}
           ariaLabel="전기차 충전기 유무"
           onChange={setEvCharger}
+          value={evCharger}
         />
         <button type="submit" className="py-3">
           다음
