@@ -18,7 +18,7 @@ export default function Calculate() {
 
   return (
     <>
-      <form>
+      <form className="flex flex-col items-start gap-8">
         {/* 1) 거주 유형 */}
         <RadioGroup
           name="homeType"
@@ -59,7 +59,10 @@ export default function Calculate() {
           ]}
           ariaLabel="스마트 미터기 설치 여부"
           children={
-            <Link href="/smart-calculate">
+            <Link
+              href="/smart-calculate"
+              className={`underline ${smartMeter === "installed" ? "visible" : "invisible"}`}
+            >
               소비량을 직접 입력하여 더욱 자세히 확인하기.
             </Link>
           }

@@ -31,11 +31,11 @@ export default function RadioGroup({
 
   return (
     <fieldset>
-      <legend className="mb-3">{legend}</legend>
+      <legend className="mb-1">{legend}</legend>
       <div
         role="radiogroup"
         aria-label={ariaLabel}
-        className="flex flex-wrap gap-3"
+        className="flex flex-wrap gap-2 pb-1"
       >
         {options.map((elem) => (
           <label key={elem.value} className="inline-flex">
@@ -53,7 +53,7 @@ export default function RadioGroup({
           </label>
         ))}
       </div>
-      {children ? <div className="py-3">{children}</div> : null}
+      {children}
     </fieldset>
   );
 }
