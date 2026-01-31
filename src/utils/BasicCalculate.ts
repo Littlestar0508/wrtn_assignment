@@ -13,18 +13,21 @@ const basicCalculate = ({
 }: BasicCalculateProps) => {
   let pay = 0;
 
+  let initE = 75 * Number(residents);
+  if (electronicCar === "yes") initE *= 2;
+
   if (meter === "fixed") {
-    if (purchase) pay += 200000;
-    let initE = 75 * Number(residents);
-    if (electronicCar === "yes") initE *= 2;
     pay += 120 * initE;
 
     return [
       { date: 0, pay },
-      { date: 1, pay: pay * (1 - 1 * 0.2) },
-      { date: 2, pay: pay * (1 - 2 * 0.2) },
-      { date: 3, pay: pay * (1 - 3 * 0.2) },
+      { date: 1, pay: pay * (1 - 1 * 0.2) * 12 },
+      { date: 2, pay: pay * (1 - 2 * 0.2) * 24 },
+      { date: 3, pay: pay * (1 - 3 * 0.2) * 36 },
     ];
+  }
+
+  if (meter === "flex") {
   }
 };
 
