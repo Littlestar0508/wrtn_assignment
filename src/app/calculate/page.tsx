@@ -1,7 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import RadioGroup from "@/components/RadioGroup";
+import { useUserSettingStore } from "@/store/useUserSettingStore";
 
 export default function Calculate() {
+  const { setHomeType, setResidents, setSmartMeter, setEvCharger } =
+    useUserSettingStore();
+
   return (
     <>
       <form>
@@ -15,6 +21,7 @@ export default function Calculate() {
             { value: "house", label: "단독주택" },
           ]}
           ariaLabel="거주 유형"
+          onChange={setHomeType}
         />
 
         {/* 거주자 수 */}
@@ -29,6 +36,7 @@ export default function Calculate() {
             { value: "5", label: "5명 이상" },
           ]}
           ariaLabel="거주자 수"
+          onChange={setResidents}
         />
 
         {/* 3) 스마트 미터기 */}
@@ -45,6 +53,7 @@ export default function Calculate() {
               소비량을 직접 입력하여 더욱 자세히 확인하기.
             </Link>
           }
+          onChange={setSmartMeter}
         />
 
         {/* 4) 전기차 충전기 */}
@@ -56,6 +65,7 @@ export default function Calculate() {
             { value: "no", label: "미소지 중" },
           ]}
           ariaLabel="전기차 충전기 유무"
+          onChange={setEvCharger}
         />
         <button type="submit" className="py-3">
           다음

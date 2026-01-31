@@ -1,3 +1,5 @@
+import { useUserSettingStore } from "@/store/useUserSettingStore";
+
 type Option = {
   value: string;
   label: string;
@@ -8,8 +10,8 @@ type RadioGroupProps = {
   legend: string;
   options: Option[];
   ariaLabel: string;
+  onChange?: (e: string) => void;
   defaultValue?: string;
-  className?: string;
   children?: React.ReactNode;
 };
 
@@ -18,10 +20,17 @@ export default function RadioGroup({
   legend,
   options,
   ariaLabel,
+  onChange,
   defaultValue,
-  className,
   children,
 }: RadioGroupProps) {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const nextSetting = value;
+
+    onChange?.(nextSetting);
+  };
+
   return (
     <fieldset>
       <legend className="mb-3">{legend}</legend>
@@ -38,6 +47,7 @@ export default function RadioGroup({
               value={elem.value}
               className="sr-only peer"
               defaultChecked={defaultValue === elem.value}
+              onChange={handleChange}
             />
             <span className="border-2 border-secondary peer-checked:bg-primary p-4">
               {elem.label}
