@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import DropDown from "./DropDown";
+import DropDown from "@/components/DropDown";
 
 const REGION = [
   "강원특별자치도",
