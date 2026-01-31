@@ -155,7 +155,7 @@ export default function Calculate() {
               purchase,
             })?.map((e, idx) => (
               <p key={e.pay + idx}>
-                {e.date}년 요금제 : {e.pay.toLocaleString()}원
+                {e.date} 요금제 : {e.pay.toLocaleString()}원
               </p>
             ))}
           </p>
