@@ -8,6 +8,7 @@ import basicCalculate from "@/utils/BasicCalculate";
 
 export default function Calculate() {
   const router = useRouter();
+  // 유저가 선택한 상태를 저장하기 위한 Zustand 상태관리의 상태들
   const {
     setHomeType,
     setResidents,
@@ -23,6 +24,8 @@ export default function Calculate() {
     purchase,
   } = useUserSettingStore();
 
+  // 유저가 필요한 것들을 모두 체크했는지 확인하는 함수
+  // 거주 유형, 거주자 수, 스마트 미터기 설치 여부, 선택하는 요금제 , 전기차 충전기 존재 여부
   const chkAllSetting = () => {
     if (
       homeType === "" ||
@@ -36,8 +39,10 @@ export default function Calculate() {
     return true;
   };
 
+  // 모든 설정을 선택 후 다음을 클릭한다면 step5의 견적 및 결제 페이지로 이동하는 함수
   const moveToStep5 = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // 모든 선택을 마무리하지 않았다면 alert로 경고창
     if (!chkAllSetting()) {
       alert("모든 항목을 선택해주시기 바랍니다.");
       return;
@@ -144,10 +149,12 @@ export default function Calculate() {
           onChange={setEvCharger}
           value={evCharger}
         />
+        {/* 만약 모든 설정을 선택하지 않으면 금액이 표시되지 않음 */}
         {chkAllSetting() ? (
           <p>
             총 금액 :
             <br />
+            {/* 고정 요금제와 가변 요금제를 대략적으로 계산하는 함수 */}
             {basicCalculate({
               residents,
               electronicCar: evCharger,
