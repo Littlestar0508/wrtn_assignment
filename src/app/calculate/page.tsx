@@ -3,8 +3,10 @@
 import Link from "next/link";
 import RadioGroup from "@/components/RadioGroup";
 import { useUserSettingStore } from "@/store/useUserSettingStore";
+import { useRouter } from "next/navigation";
 
 export default function Calculate() {
+  const router = useRouter();
   const {
     setHomeType,
     setResidents,
@@ -16,9 +18,24 @@ export default function Calculate() {
     evCharger,
   } = useUserSettingStore();
 
+  const moveToStep5 = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (
+      homeType === "" ||
+      residents === "" ||
+      smartMeter === "" ||
+      evCharger === ""
+    ) {
+      alert("모든 항목을 선택해주시기 바랍니다.");
+      return;
+    }
+
+    router.push("/payment");
+  };
+
   return (
     <>
-      <form className="flex flex-col items-start gap-8">
+      <form className="flex flex-col items-start gap-8" onSubmit={moveToStep5}>
         {/* 1) 거주 유형 */}
         <RadioGroup
           name="homeType"
@@ -82,7 +99,10 @@ export default function Calculate() {
           onChange={setEvCharger}
           value={evCharger}
         />
-        <button type="submit" className="py-3">
+        <button
+          type="submit"
+          className="border-2 border-primary rounded-2xl p-4 active:bg-secondary"
+        >
           다음
         </button>
       </form>
