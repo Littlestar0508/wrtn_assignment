@@ -10,11 +10,11 @@ export default function Calculate() {
   const {
     setHomeType,
     setResidents,
-    setSmartMeter,
+    setMeterRate,
     setEvCharger,
     homeType,
     residents,
-    smartMeter,
+    meterRate,
     evCharger,
   } = useUserSettingStore();
 
@@ -23,7 +23,7 @@ export default function Calculate() {
     if (
       homeType === "" ||
       residents === "" ||
-      smartMeter === "" ||
+      meterRate === "" ||
       evCharger === ""
     ) {
       alert("모든 항목을 선택해주시기 바랍니다.");
@@ -36,7 +36,7 @@ export default function Calculate() {
   return (
     <>
       <form className="flex flex-col items-start gap-8" onSubmit={moveToStep5}>
-        {/* 1) 거주 유형 */}
+        {/* 거주 유형 */}
         <RadioGroup
           name="homeType"
           legend="거주 유형을 선택해주세요"
@@ -66,28 +66,44 @@ export default function Calculate() {
           value={residents}
         />
 
-        {/* 3) 스마트 미터기 */}
+        {/* 스마트 미터기 사용 여부 */}
+
+        {/* 요금제 선택 */}
         <RadioGroup
-          name="smartMeter"
-          legend="스마트 미터기 설치 여부를 선택해주세요."
+          name="meterRate"
+          legend="원하시는 요금제를 선택해주시기 바랍니다."
           options={[
-            { value: "installed", label: "설치" },
-            { value: "notInstalled", label: "미설치" },
+            { value: "fixed", label: "고정 요금제" },
+            { value: "flexed", label: "가변 요금제" },
           ]}
           ariaLabel="스마트 미터기 설치 여부"
           children={
-            <Link
-              href="/smart-calculate"
-              className={`underline ${smartMeter === "installed" ? "visible" : "invisible"}`}
-            >
-              소비량을 직접 입력하여 더욱 자세히 확인하기.
-            </Link>
+            <>
+              <div
+                className={`${meterRate === "flexed" ? "visible" : "invisible"}`}
+              >
+                <p className="font-bold">
+                  가변 요금제의 경우 스마트 미터기가 설치되어 있어야 합니다.
+                </p>
+                <label className="flex gap-2 py-2">
+                  <input type="checkbox" />
+                  <span>
+                    이곳을 체크하여 스마트 미터기를 구매해주세요.(가격
+                    200,000원)
+                  </span>
+                </label>
+              </div>
+              <Link href="/smart-calculate" className="underline">
+                시간당 소비량을 아시는 경우 이 링크를 통해 더욱 자세한 금액을
+                확인하실 수 있습니다.
+              </Link>
+            </>
           }
-          onChange={setSmartMeter}
-          value={smartMeter}
+          onChange={setMeterRate}
+          value={meterRate}
         />
 
-        {/* 4) 전기차 충전기 */}
+        {/* 전기차 충전기 */}
         <RadioGroup
           name="evCharger"
           legend="기타 사항 - 전기차 충전기 존재 여부"
