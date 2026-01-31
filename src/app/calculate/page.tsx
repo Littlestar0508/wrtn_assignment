@@ -10,12 +10,16 @@ export default function Calculate() {
   const {
     setHomeType,
     setResidents,
+    setSmartMeter,
     setMeterRate,
     setEvCharger,
+    setPurchase,
     homeType,
     residents,
+    smartMeter,
     meterRate,
     evCharger,
+    purchase,
   } = useUserSettingStore();
 
   const moveToStep5 = (e: React.FormEvent<HTMLFormElement>) => {
@@ -67,6 +71,17 @@ export default function Calculate() {
         />
 
         {/* 스마트 미터기 사용 여부 */}
+        <RadioGroup
+          name="smartMeter"
+          legend="현재 스마트 미터기가 설치되어 있는지 체크해주시기 바랍니다."
+          options={[
+            { value: "uninstalled", label: "설치 미완료" },
+            { value: "installed", label: "설치 완료" },
+          ]}
+          ariaLabel="스마트 미터기 설치 여부"
+          onChange={setSmartMeter}
+          value={smartMeter}
+        />
 
         {/* 요금제 선택 */}
         <RadioGroup
@@ -76,7 +91,7 @@ export default function Calculate() {
             { value: "fixed", label: "고정 요금제" },
             { value: "flexed", label: "가변 요금제" },
           ]}
-          ariaLabel="스마트 미터기 설치 여부"
+          ariaLabel="요금제 선택"
           children={
             <>
               <div
@@ -85,24 +100,32 @@ export default function Calculate() {
                 <p className="font-bold">
                   가변 요금제의 경우 스마트 미터기가 설치되어 있어야 합니다.
                 </p>
-                <label className="flex gap-2 py-2">
-                  <input type="checkbox" />
+                <label
+                  className={`flex gap-2 py-2 ${smartMeter === "uninstalled" && meterRate === "flexed" ? "visible" : "invisible"}`}
+                >
+                  <input
+                    type="checkbox"
+                    name="purchase"
+                    value="purchase"
+                    checked={purchase}
+                    onChange={(e) => setPurchase(e.currentTarget.checked)}
+                  />
                   <span>
                     이곳을 체크하여 스마트 미터기를 구매해주세요.(가격
                     200,000원)
                   </span>
                 </label>
               </div>
-              <Link href="/smart-calculate" className="underline">
-                시간당 소비량을 아시는 경우 이 링크를 통해 더욱 자세한 금액을
-                확인하실 수 있습니다.
-              </Link>
             </>
           }
           onChange={setMeterRate}
           value={meterRate}
         />
 
+        <Link href="/smart-calculate" className="underline">
+          시간당 소비량을 아시는 경우 이 링크를 통해 더욱 자세한 금액을 확인하실
+          수 있습니다.
+        </Link>
         {/* 전기차 충전기 */}
         <RadioGroup
           name="evCharger"
