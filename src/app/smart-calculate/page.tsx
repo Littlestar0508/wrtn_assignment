@@ -45,6 +45,36 @@ export default function SmartCalculate() {
     return true;
   };
 
+  const chkKnowConsumption = () => {
+    if (knowDetail === "no") return "no";
+    if (Number(consumption) === 0) return "zero";
+  };
+
+  const moveToStep5 = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const condition = chkKnowConsumption();
+
+    if (condition === "no") {
+      alert(
+        "만약 소비량을 모른다면 이전 단계로 돌아가기 버튼을 클릭해주시기 바랍니다.",
+      );
+      return;
+    }
+
+    if (condition === "zero") {
+      alert("소비량을 작성해주시기 바랍니다.");
+      return;
+    }
+
+    if (!chkSmartSettingAll()) {
+      alert("모든 설정을 선택해주시기 바랍니다.");
+      return;
+    }
+
+    router.push("/payment");
+  };
+
   return (
     <>
       <p className="font-bold text-xl">
@@ -55,7 +85,7 @@ export default function SmartCalculate() {
         만약 소비량을 모르겠다면 이전 단계로 돌아가기
       </Link>
 
-      <form className="flex flex-col items-start gap-8">
+      <form className="flex flex-col items-start gap-8" onSubmit={moveToStep5}>
         <RadioGroup
           legend="소비량 인지 여부를 체크해주시기 바랍니다."
           ariaLabel="소비량 인지 여부"
