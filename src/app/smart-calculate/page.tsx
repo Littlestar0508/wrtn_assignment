@@ -2,6 +2,7 @@
 
 import RadioGroup from "@/components/RadioGroup";
 import { useUserSettingStore } from "@/store/useUserSettingStore";
+import smartCalculate from "@/utils/SmartCalculate";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -55,12 +56,15 @@ export default function SmartCalculate() {
         />
         <label className="flex flex-col">
           소비량을 적어주시기 바랍니다.
-          <input
-            type="number"
-            className="border-2 border-secondary rounded-2xl p-2"
-            value={consumption}
-            onChange={setConsumptionInput}
-          />
+          <div>
+            <input
+              type="number"
+              className="border-2 border-secondary rounded-2xl p-2"
+              value={consumption}
+              onChange={setConsumptionInput}
+            />{" "}
+            KWh
+          </div>
         </label>
         <RadioGroup
           name="smartMeter"
@@ -98,6 +102,18 @@ export default function SmartCalculate() {
           onChange={setEvCharger}
           value={evCharger}
         />
+        {smartCalculate({
+          consumption,
+          smartMeter: purchase,
+          electronic: evCharger,
+        }).map((elem) => (
+          <p key={elem.cost + elem.date}>
+            {typeof elem.cost === "string"
+              ? elem.date
+              : `${elem.date} 요금제 : ${elem.cost.toLocaleString()}원`}
+          </p>
+        ))}
+
         <button
           type="submit"
           className="border-2 border-primary rounded-2xl p-4 active:bg-secondary"
