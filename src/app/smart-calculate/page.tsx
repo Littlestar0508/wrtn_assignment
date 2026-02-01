@@ -2,8 +2,12 @@
 
 import RadioGroup from "@/components/RadioGroup";
 import { useUserSettingStore } from "@/store/useUserSettingStore";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function SmartCalculate() {
+  const router = useRouter();
+
   const {
     evCharger,
     smartMeter,
@@ -29,10 +33,13 @@ export default function SmartCalculate() {
 
   return (
     <>
-      <div className="font-bold text-xl">
+      <p className="font-bold text-xl">
         해당 페이지는 스마트 미터기를 사용하고 있고, 소비량을 알고 있는 사람들을
         대상으로 합니다.
-      </div>
+      </p>
+      <Link href="/calculate" className="underline block py-2">
+        만약 소비량을 모르겠다면 이전 단계로 돌아가기
+      </Link>
 
       <form className="flex flex-col items-start gap-8">
         <RadioGroup
