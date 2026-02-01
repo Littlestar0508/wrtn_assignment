@@ -1,7 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import DropDown from "./DropDown";
+import DropDown from "@/components/DropDown";
+import { useEffect } from "react";
+import { useUserSettingStore } from "@/store/useUserSettingStore";
 
 const REGION = [
   "강원특별자치도",
@@ -25,6 +27,7 @@ const REGION = [
 
 export default function Landing() {
   const router = useRouter();
+  const { resetSetting } = useUserSettingStore();
 
   // 서울특별시 혹은 경기도를 체크한 것인지 확인
   // 만약 서울 혹은 경기권이 아니라면 false를 반환하여 경고만 하도록 유도
@@ -56,6 +59,10 @@ export default function Landing() {
       }
     }
   };
+
+  useEffect(() => {
+    resetSetting();
+  }, []);
 
   return (
     <>
