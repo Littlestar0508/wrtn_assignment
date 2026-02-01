@@ -1,7 +1,75 @@
+"use client";
+
+import RadioGroup from "@/components/RadioGroup";
+import { useUserSettingStore } from "@/store/useUserSettingStore";
+
 export default function SmartCalculate() {
+  const {
+    evCharger,
+    smartMeter,
+    purchase,
+    setEvCharger,
+    setSmartMeter,
+    setPurchase,
+  } = useUserSettingStore();
+
   return (
     <>
-      <div>스마트 미터기 계산 페이지입니다.</div>
+      <div className="font-bold text-xl">
+        해당 페이지는 스마트 미터기를 사용하고 있고, 소비량을 알고 있는 사람들을
+        대상으로 합니다.
+      </div>
+      <form className="flex flex-col items-start gap-8">
+        <label className="flex flex-col">
+          소비량을 적어주시기 바랍니다.
+          <input
+            type="number"
+            className="border-2 border-secondary rounded-2xl p-2"
+          />
+        </label>
+        <RadioGroup
+          name="smartMeter"
+          legend="현재 스마트 미터기가 설치되어 있는지 체크해주시기 바랍니다."
+          options={[
+            { value: "uninstalled", label: "설치 미완료" },
+            { value: "installed", label: "설치 완료" },
+          ]}
+          ariaLabel="스마트 미터기 설치 여부"
+          onChange={setSmartMeter}
+          value={smartMeter}
+          children={
+            <label className="flex gap-2 py-2">
+              <input
+                type="checkbox"
+                name="purchase"
+                value="purchase"
+                checked={purchase}
+                onChange={(e) => setPurchase(e.currentTarget.checked)}
+              />
+              <span>
+                이곳을 체크하여 스마트 미터기를 구매해주세요.(가격 200,000원)
+              </span>
+            </label>
+          }
+        />
+        <RadioGroup
+          name="evCharger"
+          legend="기타 사항 - 전기차 충전기 존재 여부"
+          options={[
+            { value: "yes", label: "소지 중" },
+            { value: "no", label: "미소지 중" },
+          ]}
+          ariaLabel="전기차 충전기 유무"
+          onChange={setEvCharger}
+          value={evCharger}
+        />
+        <button
+          type="submit"
+          className="border-2 border-primary rounded-2xl p-4 active:bg-secondary"
+        >
+          다음
+        </button>
+      </form>
     </>
   );
 }
