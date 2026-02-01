@@ -8,6 +8,8 @@ type UserSettingState = {
   meterRate: string;
   evCharger: string;
   purchase: boolean;
+  knowDetail: string;
+  consumption: number | string;
 
   setHomeType: (homeType: string) => void;
   setResidents: (residents: string) => void;
@@ -15,6 +17,8 @@ type UserSettingState = {
   setMeterRate: (smartMeter: string) => void;
   setEvCharger: (evCharger: string) => void;
   setPurchase: (purchase: boolean) => void;
+  setKnowDetail: (knowDetail: string) => void;
+  setConsumption: (consumption: number | string) => void;
   resetSetting: () => void;
 };
 
@@ -27,6 +31,8 @@ export const useUserSettingStore = create<UserSettingState>()(
       meterRate: "",
       evCharger: "",
       purchase: false,
+      knowDetail: "",
+      consumption: 0,
 
       setHomeType: (homeType) => set({ homeType }),
       setResidents: (residents) => set({ residents }),
@@ -34,6 +40,8 @@ export const useUserSettingStore = create<UserSettingState>()(
       setMeterRate: (meterRate) => set({ meterRate }),
       setEvCharger: (evCharger) => set({ evCharger }),
       setPurchase: (purchase) => set({ purchase }),
+      setKnowDetail: (knowDetail) => set({ knowDetail }),
+      setConsumption: (consumption) => set({ consumption }),
       resetSetting: () =>
         set({
           homeType: "",
@@ -42,6 +50,8 @@ export const useUserSettingStore = create<UserSettingState>()(
           meterRate: "",
           evCharger: "",
           purchase: false,
+          knowDetail: "",
+          consumption: 0,
         }),
     }),
     {

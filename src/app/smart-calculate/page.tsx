@@ -8,10 +8,24 @@ export default function SmartCalculate() {
     evCharger,
     smartMeter,
     purchase,
+    knowDetail,
+    consumption,
     setEvCharger,
     setSmartMeter,
     setPurchase,
+    setKnowDetail,
+    setConsumption,
   } = useUserSettingStore();
+
+  const setConsumptionInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let val = e.currentTarget.value;
+
+    if (val.startsWith("-")) return;
+    val = val.replace(/[^\d]/g, "");
+    if (val.length > 1) val = val.replace(/^0+/, "");
+
+    setConsumption(val);
+  };
 
   return (
     <>
@@ -19,12 +33,26 @@ export default function SmartCalculate() {
         해당 페이지는 스마트 미터기를 사용하고 있고, 소비량을 알고 있는 사람들을
         대상으로 합니다.
       </div>
+
       <form className="flex flex-col items-start gap-8">
+        <RadioGroup
+          legend="소비량 인지 여부를 체크해주시기 바랍니다."
+          ariaLabel="소비량 인지 여부"
+          name="knowDetail"
+          options={[
+            { value: "yes", label: "알고 있다" },
+            { value: "no", label: "모른다" },
+          ]}
+          value={knowDetail}
+          onChange={setKnowDetail}
+        />
         <label className="flex flex-col">
           소비량을 적어주시기 바랍니다.
           <input
             type="number"
             className="border-2 border-secondary rounded-2xl p-2"
+            value={consumption}
+            onChange={setConsumptionInput}
           />
         </label>
         <RadioGroup
