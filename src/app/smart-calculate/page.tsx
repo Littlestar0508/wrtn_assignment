@@ -32,6 +32,19 @@ export default function SmartCalculate() {
     setConsumption(val);
   };
 
+  const chkSmartSettingAll = () => {
+    if (
+      evCharger === "" ||
+      smartMeter === "" ||
+      knowDetail === "" ||
+      Number(consumption) === 0
+    ) {
+      return false;
+    }
+
+    return true;
+  };
+
   return (
     <>
       <p className="font-bold text-xl">
@@ -102,17 +115,21 @@ export default function SmartCalculate() {
           onChange={setEvCharger}
           value={evCharger}
         />
-        {smartCalculate({
-          consumption,
-          smartMeter: purchase,
-          electronic: evCharger,
-        }).map((elem) => (
-          <p key={elem.cost + elem.date}>
-            {typeof elem.cost === "string"
-              ? elem.date
-              : `${elem.date} 요금제 : ${elem.cost.toLocaleString()}원`}
-          </p>
-        ))}
+        {chkSmartSettingAll() ? (
+          smartCalculate({
+            consumption,
+            smartMeter: purchase,
+            electronic: evCharger,
+          }).map((elem) => (
+            <p key={elem.cost + elem.date}>
+              {typeof elem.cost === "string"
+                ? elem.date
+                : `${elem.date} 요금제 : ${elem.cost.toLocaleString()}원`}
+            </p>
+          ))
+        ) : (
+          <p>모든 설정을 적어주시기 바랍니다.</p>
+        )}
 
         <button
           type="submit"
