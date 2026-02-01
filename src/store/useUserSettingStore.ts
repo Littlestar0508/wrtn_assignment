@@ -15,6 +15,7 @@ type UserSettingState = {
   setMeterRate: (smartMeter: string) => void;
   setEvCharger: (evCharger: string) => void;
   setPurchase: (purchase: boolean) => void;
+  resetSetting: () => void;
 };
 
 export const useUserSettingStore = create<UserSettingState>()(
@@ -33,6 +34,15 @@ export const useUserSettingStore = create<UserSettingState>()(
       setMeterRate: (meterRate) => set({ meterRate }),
       setEvCharger: (evCharger) => set({ evCharger }),
       setPurchase: (purchase) => set({ purchase }),
+      resetSetting: () =>
+        set({
+          homeType: "",
+          residents: "",
+          smartMeter: "",
+          meterRate: "",
+          evCharger: "",
+          purchase: false,
+        }),
     }),
     {
       name: "user-setting-storage",
