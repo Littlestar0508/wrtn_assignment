@@ -23,28 +23,48 @@ const basicCalculate = ({
   const govern = 80000;
   const fee = initE * 0.2;
 
+  // 스마트 미터기 설치 요금
+  let smartM = purchase ? 200000 : 0;
+
   // 고정 요금제
   if (meter === "fixed") {
     pay += 120 * initE;
 
     // 1,2,3년의 전체 금액(년단위)을 계산
     return [
-      { date: "1년", pay: (pay * (1 - 1 * 0.2) + govern + fee) * 12 },
-      { date: "2년", pay: (pay * (1 - 2 * 0.2) + govern + fee) * 24 },
-      { date: "3년", pay: (pay * (1 - 3 * 0.2) + govern + fee) * 36 },
+      { date: "스마트 미터기 설치 가격", pay: smartM },
+      {
+        date: "1년",
+        pay: Math.floor((pay * (1 - 1 * 0.2) + govern + fee) * 12),
+      },
+      {
+        date: "2년",
+        pay: Math.floor((pay * (1 - 2 * 0.2) + govern + fee) * 24),
+      },
+      {
+        date: "3년",
+        pay: Math.floor((pay * (1 - 3 * 0.2) + govern + fee) * 36),
+      },
     ];
   }
 
   // 가변 요금제
   if (meter === "flexed") {
-    if (purchase) pay += 200000;
-
     // 각각 월별 금액을 계산
     return [
-      { date: "스마트 미터기 설치 가격", pay: pay },
-      { date: "평상시(3,4,5,10)월별", pay: 120 * initE + govern + fee },
-      { date: "여름(6,7,8,9)월별", pay: 160 * initE + govern + fee },
-      { date: "겨울(11,12,1,2)월별", pay: 80 * initE + govern + fee },
+      { date: "스마트 미터기 설치 가격", pay: smartM },
+      {
+        date: "평상시(3,4,5,10)월별",
+        pay: Math.floor(120 * initE + govern + fee),
+      },
+      {
+        date: "여름(6,7,8,9)월별",
+        pay: Math.floor(160 * initE + govern + fee),
+      },
+      {
+        date: "겨울(11,12,1,2)월별",
+        pay: Math.floor(80 * initE + govern + fee),
+      },
     ];
   }
 };
