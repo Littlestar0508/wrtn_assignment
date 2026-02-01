@@ -151,7 +151,7 @@ export default function Calculate() {
         />
         {/* 만약 모든 설정을 선택하지 않으면 금액이 표시되지 않음 */}
         {chkAllSetting() ? (
-          <p>
+          <div>
             총 금액 :
             <br />
             {/* 고정 요금제와 가변 요금제를 대략적으로 계산하는 함수 */}
@@ -165,7 +165,7 @@ export default function Calculate() {
                 {e.date} 요금제 : {e.pay.toLocaleString()}원
               </p>
             ))}
-          </p>
+          </div>
         ) : (
           <p className="font-bold">모든 설정을 체크해주시기 바랍니다.</p>
         )}
