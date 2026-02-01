@@ -18,17 +18,18 @@ const smartCalculate = ({
   const fee = consumption * 0.2;
   const install = smartMeter ? 200000 : 0;
 
+  payment.push({ date: "스마트 미터기 설치 가격", cost: install });
+
   payment.push({ date: "고정 요금", cost: "고정 요금" });
 
   for (let i = 0; i < 3; i++) {
     const fixed = {
       date: `${i + 1}년`,
-      cost:
-        Math.floor(
-          consumption * 120 * (1 - (i + 1) * 0.2) +
-            govern * 12 * (i + 1) +
-            fee * 12 * (i + 1),
-        ) + install,
+      cost: Math.floor(
+        consumption * 120 * (1 - (i + 1) * 0.2) +
+          govern * 12 * (i + 1) +
+          fee * 12 * (i + 1),
+      ),
     };
 
     payment.push(fixed);
@@ -48,7 +49,7 @@ const smartCalculate = ({
 
     const flexed = {
       date: str,
-      cost: Math.floor(consumption * flexCost + govern + fee) + install,
+      cost: Math.floor(consumption * flexCost + govern + fee),
     };
 
     payment.push(flexed);
