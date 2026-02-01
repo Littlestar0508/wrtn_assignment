@@ -22,16 +22,21 @@ export default function SmartCalculate() {
     setConsumption,
   } = useUserSettingStore();
 
+  // 소비량을 입력할때 consumption을 변경하는 로직
+  // 만약 string으로 다루지 않고 숫자형으로 다루게 될 경우 맨 앞에 오는 0을 제거하기 까다로워서 우회
   const setConsumptionInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     let val = e.currentTarget.value;
 
+    // 음수 방지 및 맨 앞자리 0방지
     if (val.startsWith("-")) return;
+    // 숫자만 추출
     val = val.replace(/[^\d]/g, "");
     if (val.length > 1) val = val.replace(/^0+/, "");
 
     setConsumption(val);
   };
 
+  // 모든 설정을 체크했는지 확인하는 로직
   const chkSmartSettingAll = () => {
     if (
       evCharger === "" ||
@@ -45,11 +50,13 @@ export default function SmartCalculate() {
     return true;
   };
 
+  // 소비량을 알고 있는지와 소비량을 입력했는지 체크하는 로직
   const chkKnowConsumption = () => {
     if (knowDetail === "no") return "no";
     if (Number(consumption) === 0) return "zero";
   };
 
+  // 모든 설정을 체크하고, 소비량을 알고 있으면 step5로 넘어가도록 설계
   const moveToStep5 = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -85,6 +92,7 @@ export default function SmartCalculate() {
         만약 소비량을 모르겠다면 이전 단계로 돌아가기
       </Link>
 
+      {/* 소비량 인지 여부 */}
       <form className="flex flex-col items-start gap-8" onSubmit={moveToStep5}>
         <RadioGroup
           legend="소비량 인지 여부를 체크해주시기 바랍니다."
@@ -97,6 +105,8 @@ export default function SmartCalculate() {
           value={knowDetail}
           onChange={setKnowDetail}
         />
+
+        {/* 소비량 입력 */}
         <label className="flex flex-col">
           소비량을 적어주시기 바랍니다.
           <div>
@@ -109,6 +119,8 @@ export default function SmartCalculate() {
             KWh
           </div>
         </label>
+
+        {/* 스마트 미터기 설치 완료되어 있는지 체크 */}
         <RadioGroup
           name="smartMeter"
           legend="현재 스마트 미터기가 설치되어 있는지 체크해주시기 바랍니다."
@@ -134,6 +146,8 @@ export default function SmartCalculate() {
             </label>
           }
         />
+
+        {/* 전기차 충전기 존재 여부 */}
         <RadioGroup
           name="evCharger"
           legend="기타 사항 - 전기차 충전기 존재 여부"
@@ -145,12 +159,15 @@ export default function SmartCalculate() {
           onChange={setEvCharger}
           value={evCharger}
         />
+
+        {/* 만약 모든 설정을 완료했다면 리스트렌더링 */}
         {chkSmartSettingAll() ? (
           smartCalculate({
             consumption,
             smartMeter: purchase,
             electronic: evCharger,
           }).map((elem) => (
+            // 만약 금액이 정상적으로 출력되지 않는다면 -> 고정 요금과 가변 요금을 텍스트로 출력하기 위한 우회 방법
             <p key={elem.cost + elem.date}>
               {typeof elem.cost === "string"
                 ? elem.date
