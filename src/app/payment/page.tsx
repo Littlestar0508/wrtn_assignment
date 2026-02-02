@@ -3,11 +3,13 @@
 import Fixed from "@/components/Fixed";
 import Flexed from "@/components/Flexed";
 import RadioGroup from "@/components/RadioGroup";
+import { useModalStateStore } from "@/store/useModalStateStore";
 import { useUserSettingStore } from "@/store/useUserSettingStore";
 
 export default function Payment() {
   const { meterRate, knowDetail, consumption, setMeterRate } =
     useUserSettingStore();
+  const { isModalOpen } = useModalStateStore();
 
   return (
     <>
@@ -38,7 +40,7 @@ export default function Payment() {
       ) : (
         <Flexed />
       )}
-      <div>모달영역</div>
+      {isModalOpen ? <div>모달 오픈</div> : <div>모달 닫기</div>}
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { useUserSettingStore } from "@/store/useUserSettingStore";
 import basicCalculate from "@/utils/BasicCalculate";
 import smartCalculate from "@/utils/SmartCalculate";
+import OpenModalButton from "./OpenModal";
 
 export default function Fixed() {
   const { residents, purchase, evCharger, meterRate, consumption, knowDetail } =
@@ -36,12 +37,7 @@ export default function Fixed() {
                   총 예상 금액 :{" "}
                   {(elem.pay + (purchase ? 200000 : 0)).toLocaleString()}원
                 </p>
-                <button
-                  type="button"
-                  className="bg-primary p-2 rounded-xl mt-4 border border-secondary active:bg-emphasize"
-                >
-                  선택
-                </button>
+                <OpenModalButton />
               </div>
             );
           })}
@@ -74,12 +70,7 @@ export default function Fixed() {
                   ).toLocaleString()}
                   원
                 </p>
-                <button
-                  type="button"
-                  className="bg-primary p-2 rounded-xl mt-4 border border-secondary active:bg-emphasize"
-                >
-                  선택
-                </button>
+                <OpenModalButton />
               </div>
             );
           })}
