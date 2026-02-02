@@ -9,6 +9,8 @@ type UserSettingState = {
   evCharger: string;
   purchase: boolean;
   knowDetail: string;
+  year: number;
+  totalPrice: number;
   consumption: number | string;
 
   setHomeType: (homeType: string) => void;
@@ -19,6 +21,8 @@ type UserSettingState = {
   setPurchase: (purchase: boolean) => void;
   setKnowDetail: (knowDetail: string) => void;
   setConsumption: (consumption: number | string) => void;
+  setYear: (year: number) => void;
+  setTotalPrice: (totalPrice: number) => void;
   resetSetting: () => void;
 };
 
@@ -33,6 +37,8 @@ export const useUserSettingStore = create<UserSettingState>()(
       purchase: false,
       knowDetail: "",
       consumption: 0,
+      totalPrice: 0,
+      year: 1,
 
       setHomeType: (homeType) => set({ homeType }),
       setResidents: (residents) => set({ residents }),
@@ -42,6 +48,8 @@ export const useUserSettingStore = create<UserSettingState>()(
       setPurchase: (purchase) => set({ purchase }),
       setKnowDetail: (knowDetail) => set({ knowDetail }),
       setConsumption: (consumption) => set({ consumption }),
+      setYear: (year) => set({ year }),
+      setTotalPrice: (totalPrice) => set({ totalPrice }),
       resetSetting: () =>
         set({
           homeType: "",
