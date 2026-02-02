@@ -1,9 +1,12 @@
 import { useModalStateStore } from "@/store/useModalStateStore";
+import { useUserSettingStore } from "@/store/useUserSettingStore";
 
-export default function OpenModalButton() {
-  const { isModalOpen, setModalOpen } = useModalStateStore();
+export default function OpenModalButton({ year }: { year: number }) {
+  const { setYear } = useUserSettingStore();
+  const { setModalOpen } = useModalStateStore();
 
   const setOpenModal = () => {
+    setYear(year);
     setModalOpen();
   };
 

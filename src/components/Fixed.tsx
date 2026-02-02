@@ -37,7 +37,7 @@ export default function Fixed() {
                   총 예상 금액 :{" "}
                   {(elem.pay + (purchase ? 200000 : 0)).toLocaleString()}원
                 </p>
-                <OpenModalButton />
+                <OpenModalButton year={idx} />
               </div>
             );
           })}
@@ -70,7 +70,7 @@ export default function Fixed() {
                   ).toLocaleString()}
                   원
                 </p>
-                <OpenModalButton />
+                <OpenModalButton year={idx - 1} />
               </div>
             );
           })}

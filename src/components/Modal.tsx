@@ -63,7 +63,7 @@ export default function Modal() {
               consumption,
               smartMeter: purchase,
               electronic: evCharger,
-            })[year + 6].cost,
+            })[year + 5].cost,
           ) *
           12 *
           year

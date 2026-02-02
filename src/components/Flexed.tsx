@@ -64,7 +64,7 @@ export default function Flexed() {
                   ).toLocaleString()}
                   원
                 </p>
-                <OpenModalButton />
+                <OpenModalButton year={idx} />
               </div>
             );
           })}
@@ -98,7 +98,7 @@ export default function Flexed() {
                   ).toLocaleString()}
                   원
                 </p>
-                <OpenModalButton />
+                <OpenModalButton year={idx - 5} />
               </div>
             );
           })}
