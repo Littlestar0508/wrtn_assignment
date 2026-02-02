@@ -36,9 +36,7 @@ const smartCalculate = ({
       date: `${i + 1}년`,
       // n년 소비량 = 120*(n*0.2*100% 할인) + 고정비용을 연단위로 계산
       cost: Math.floor(
-        consumption * 120 * (1 - (i + 1) * 0.2) +
-          govern * 12 * (i + 1) +
-          fee * 12 * (i + 1),
+        (consumption * (1 - (i + 1) * 0.2) * 120 + govern + fee) * (i + 1) * 12,
       ),
     };
 
