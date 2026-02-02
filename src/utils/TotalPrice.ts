@@ -42,7 +42,7 @@ const totalPrice = ({
       );
     }
   } else {
-    if (knowDetail === "yes") {
+    if (chk) {
       return (
         Number(
           smartCalculate({
@@ -55,14 +55,18 @@ const totalPrice = ({
         year
       );
     } else {
-      Number(
-        basicCalculate({
-          residents,
-          purchase,
-          electronicCar: evCharger,
-          meter: meterRate,
-        })?.[year]?.pay,
-      ) ?? 0;
+      return (
+        Number(
+          basicCalculate({
+            residents,
+            purchase,
+            electronicCar: evCharger,
+            meter: meterRate,
+          })?.[year]?.pay,
+        ) *
+        12 *
+        year
+      );
     }
   }
 };

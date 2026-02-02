@@ -37,6 +37,7 @@ export default function Modal() {
     year,
     consumption,
   } = useUserSettingStore();
+
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -89,7 +90,7 @@ export default function Modal() {
             </p>
             <p>
               할인 및 세금이 계산된 최종 금액(월간) :{" "}
-              {(
+              {Math.floor(
                 (totalPrice({
                   chk: chkKnowDetail(),
                   consumption,
@@ -100,42 +101,28 @@ export default function Modal() {
                   residents,
                   year,
                 }) ?? 0) /
-                (12 * year)
+                  (12 * year),
               ).toLocaleString()}
               원
             </p>
             <p>
               세금 :{" "}
-              {(
+              {Math.floor(
                 totalElectric({
                   chk: chkKnowDetail(),
                   residents,
                   evCharger,
                   consumption,
                   year,
-                }) * 0.2
+                }) * 0.2,
               ).toLocaleString()}
               원
             </p>
             <p>관리비 : {(80000 * year * 12).toLocaleString()}원</p>
             <p>
               연간 총액 :{" "}
-              {totalPrice({
-                chk: chkKnowDetail(),
-                consumption,
-                evCharger,
-                knowDetail,
-                meterRate,
-                purchase,
-                residents,
-                year,
-              })?.toLocaleString()}
-              원
-            </p>
-            <p>
-              스마트 미터기 설치 시 :{" "}
-              {(
-                (totalPrice({
+              {Math.floor(
+                totalPrice({
                   chk: chkKnowDetail(),
                   consumption,
                   evCharger,
@@ -144,7 +131,25 @@ export default function Modal() {
                   purchase,
                   residents,
                   year,
-                }) ?? 0) + 200000
+                }),
+              )?.toLocaleString()}
+              원
+            </p>
+            <p>
+              스마트 미터기 설치 시 :{" "}
+              {(
+                Math.floor(
+                  totalPrice({
+                    chk: chkKnowDetail(),
+                    consumption,
+                    evCharger,
+                    knowDetail,
+                    meterRate,
+                    purchase,
+                    residents,
+                    year,
+                  }) ?? 0,
+                ) + 200000
               )?.toLocaleString()}
               원
             </p>
