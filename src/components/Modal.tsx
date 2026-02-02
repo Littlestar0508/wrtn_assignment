@@ -4,6 +4,8 @@ import smartCalculate from "@/utils/SmartCalculate";
 import basicCalculate from "@/utils/BasicCalculate";
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import totalElectric from "@/utils/TotalElectric";
+import totalPrice from "@/utils/TotalPrice";
 
 export default function Modal() {
   const router = useRouter();
@@ -23,62 +25,6 @@ export default function Modal() {
       return false;
 
     return true;
-  };
-
-  const totalElectric = () => {
-    if (chkKnowDetail()) {
-      if (evCharger === "yes") return Number(consumption) * 2 * year * 12;
-      else return Number(consumption) * year * 12;
-    } else {
-      if (evCharger === "yes") return Number(residents) * 75 * 2 * year * 12;
-      else return Number(residents) * 75 * year * 12;
-    }
-  };
-
-  const totalPrice = () => {
-    if (meterRate === "fixed") {
-      if (chkKnowDetail()) {
-        return Number(
-          smartCalculate({
-            consumption,
-            smartMeter: purchase,
-            electronic: evCharger,
-          })[year + 1].cost,
-        );
-      } else {
-        return Number(
-          basicCalculate({
-            residents,
-            purchase,
-            electronicCar: evCharger,
-            meter: meterRate,
-          })?.[year]?.pay ?? 0,
-        );
-      }
-    } else {
-      if (knowDetail) {
-        return (
-          Number(
-            smartCalculate({
-              consumption,
-              smartMeter: purchase,
-              electronic: evCharger,
-            })[year + 5].cost,
-          ) *
-          12 *
-          year
-        );
-      } else {
-        Number(
-          basicCalculate({
-            residents,
-            purchase,
-            electronicCar: evCharger,
-            meter: meterRate,
-          })?.[year]?.pay,
-        ) ?? 0;
-      }
-    }
   };
 
   const {
@@ -118,23 +64,89 @@ export default function Modal() {
           </p>
           <div className="flex flex-col gap-1">
             <p>
-              총 예상 소비량 : {totalElectric().toLocaleString()}
+              총 예상 소비량 :{" "}
+              {totalElectric({
+                chk: chkKnowDetail(),
+                residents,
+                evCharger,
+                consumption,
+                year,
+              }).toLocaleString()}
               KWh
             </p>
             <p>
-              단순 계산 금액(연간) : {(totalElectric() * 120).toLocaleString()}
+              단순 계산 금액(연간) :{" "}
+              {(
+                totalElectric({
+                  chk: chkKnowDetail(),
+                  residents,
+                  evCharger,
+                  consumption,
+                  year,
+                }) * 120
+              ).toLocaleString()}
               원
             </p>
             <p>
               할인 및 세금이 계산된 최종 금액(월간) :{" "}
-              {((totalPrice() ?? 0) / (12 * year)).toLocaleString()}원
+              {(
+                (totalPrice({
+                  chk: chkKnowDetail(),
+                  consumption,
+                  evCharger,
+                  knowDetail,
+                  meterRate,
+                  purchase,
+                  residents,
+                  year,
+                }) ?? 0) /
+                (12 * year)
+              ).toLocaleString()}
+              원
             </p>
-            <p>세금 : {(totalElectric() * 0.2).toLocaleString()}원</p>
+            <p>
+              세금 :{" "}
+              {(
+                totalElectric({
+                  chk: chkKnowDetail(),
+                  residents,
+                  evCharger,
+                  consumption,
+                  year,
+                }) * 0.2
+              ).toLocaleString()}
+              원
+            </p>
             <p>관리비 : {(80000 * year * 12).toLocaleString()}원</p>
-            <p>연간 총액 : {totalPrice()?.toLocaleString()}원</p>
+            <p>
+              연간 총액 :{" "}
+              {totalPrice({
+                chk: chkKnowDetail(),
+                consumption,
+                evCharger,
+                knowDetail,
+                meterRate,
+                purchase,
+                residents,
+                year,
+              })?.toLocaleString()}
+              원
+            </p>
             <p>
               스마트 미터기 설치 시 :{" "}
-              {((totalPrice() ?? 0) + 200000)?.toLocaleString()}원
+              {(
+                (totalPrice({
+                  chk: chkKnowDetail(),
+                  consumption,
+                  evCharger,
+                  knowDetail,
+                  meterRate,
+                  purchase,
+                  residents,
+                  year,
+                }) ?? 0) + 200000
+              )?.toLocaleString()}
+              원
             </p>
           </div>
           <div className="flex gap-4">
