@@ -2,6 +2,7 @@
 
 import Fixed from "@/components/Fixed";
 import Flexed from "@/components/Flexed";
+import Modal from "@/components/Modal";
 import RadioGroup from "@/components/RadioGroup";
 import { useModalStateStore } from "@/store/useModalStateStore";
 import { useUserSettingStore } from "@/store/useUserSettingStore";
@@ -40,7 +41,7 @@ export default function Payment() {
       ) : (
         <Flexed />
       )}
-      {isModalOpen ? <div>모달 오픈</div> : <div>모달 닫기</div>}
+      {isModalOpen ? <Modal /> : null}
     </>
   );
 }
