@@ -128,30 +128,16 @@ export default function Modal() {
             <p>관리비 : {(80000 * year * 12).toLocaleString()}원</p>
             <p>
               연간 총액 :{" "}
-              {meterRate === "fixed"
-                ? Math.floor(
-                    totalPrice({
-                      chk: chkKnowDetail(),
-                      consumption,
-                      evCharger,
-                      knowDetail,
-                      meterRate,
-                      purchase,
-                      residents,
-                      year,
-                    }),
-                  )?.toLocaleString()
-                : Math.floor(
-                    totalElectric({
-                      chk: chkKnowDetail(),
-                      residents,
-                      evCharger,
-                      consumption,
-                      year,
-                    }) *
-                      (120 + 0.2) +
-                      80000 * 12 * year,
-                  ).toLocaleString()}
+              {totalPrice({
+                chk: chkKnowDetail(),
+                consumption,
+                evCharger,
+                knowDetail,
+                meterRate,
+                purchase,
+                residents,
+                year,
+              }).toLocaleString()}
               원
             </p>
             <p>

@@ -46,17 +46,11 @@ const totalPrice = ({
   } else {
     // 가변인지? 사용량을 알고 있는지?
     if (chk) {
-      return (
-        Number(
-          smartCalculate({
-            consumption,
-            smartMeter: purchase,
-            electronic: evCharger,
-          })[year + 5].cost,
-        ) *
-        12 *
-        year
-      );
+      const fee = Number(consumption) * 0.2;
+      const govern = 80000;
+      const month = 120 * Number(consumption);
+
+      return Math.floor((fee + govern + month) * year * 12);
     } else {
       return (
         Number(
