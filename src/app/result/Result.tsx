@@ -86,34 +86,69 @@ export default function ResultComponent() {
       <div className="flex w-2/3 pt-4 font-bold text-red-500">
         <p className="flex-2">총 비용(스마트 미터기 설치 비용 포함)</p>
         <p className="flex-1">
-          {(
-            totalPrice({
-              chk: chkKnowDetail(),
-              consumption,
-              evCharger,
-              knowDetail,
-              meterRate,
-              purchase,
-              residents,
-              year,
-            }) + (purchase ? 200000 : 0)
-          )?.toLocaleString()}
+          {meterRate === "fixed"
+            ? (
+                Math.floor(
+                  totalPrice({
+                    chk: chkKnowDetail(),
+                    consumption,
+                    evCharger,
+                    knowDetail,
+                    meterRate,
+                    purchase,
+                    residents,
+                    year,
+                  }),
+                ) + (purchase ? 200000 : 0)
+              )?.toLocaleString()
+            : (
+                Math.floor(
+                  totalElectric({
+                    chk: chkKnowDetail(),
+                    residents,
+                    evCharger,
+                    consumption,
+                    year,
+                  }) *
+                    (120 + 0.2) +
+                    80000 * 12 * year,
+                ) + (purchase ? 200000 : 0)
+              ).toLocaleString()}
           원
         </p>
         <p className="flex-1">
-          {(
-            totalPrice({
-              chk: chkKnowDetail(),
-              consumption,
-              evCharger,
-              knowDetail,
-              meterRate,
-              purchase,
-              residents,
-              year,
-            }) /
-            (12 * year)
-          )?.toLocaleString()}
+          {meterRate === "fixed"
+            ? Math.floor(
+                (Math.floor(
+                  totalPrice({
+                    chk: chkKnowDetail(),
+                    consumption,
+                    evCharger,
+                    knowDetail,
+                    meterRate,
+                    purchase,
+                    residents,
+                    year,
+                  }),
+                ) +
+                  (purchase ? 200000 : 0)) /
+                  (12 * year),
+              )?.toLocaleString()
+            : Math.floor(
+                (Math.floor(
+                  totalElectric({
+                    chk: chkKnowDetail(),
+                    residents,
+                    evCharger,
+                    consumption,
+                    year,
+                  }) *
+                    (120 + 0.2) +
+                    80000 * 12 * year,
+                ) +
+                  (purchase ? 200000 : 0)) /
+                  (year * 12),
+              ).toLocaleString()}
           원
         </p>
       </div>
