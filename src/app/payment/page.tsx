@@ -14,6 +14,7 @@ export default function Payment() {
 
   return (
     <>
+      {/* 최종 선택 전 고정 요금제와 가변 요금제 선택 가능 */}
       <RadioGroup
         name="meterRate"
         legend="원하시는 요금제를 선택해주시기 바랍니다."
@@ -34,13 +35,17 @@ export default function Payment() {
         onChange={setMeterRate}
         value={meterRate}
       />
+      {/* 만약 step4에서 바로 넘어와서 고정과 가변 요금제 선택이 되지 않았다면 선택하도록 유도 */}
       {meterRate === "" ? (
         <p className="font-bold py-4">요금제를 선택해주시기 바랍니다.</p>
       ) : meterRate === "fixed" ? (
+        // 고정 요금제 리스트
         <Fixed />
       ) : (
+        // 가변 요금제 리스트
         <Flexed />
       )}
+      {/* 모달 영역 */}
       {isModalOpen ? <Modal /> : null}
     </>
   );

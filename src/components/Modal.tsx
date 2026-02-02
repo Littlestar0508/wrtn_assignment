@@ -9,12 +9,15 @@ import totalPrice from "@/utils/TotalPrice";
 
 export default function Modal() {
   const router = useRouter();
+  // 모달을 닫는 이벤트
   const { setModalClose } = useModalStateStore();
 
+  // 결제 결과 페이지로 이동
   const moveToResult = () => {
     router.push("/result");
   };
 
+  // 사용량을 알고 있는지 체크
   const chkKnowDetail = () => {
     if (
       consumption === "0" ||
@@ -29,7 +32,6 @@ export default function Modal() {
 
   const {
     residents,
-    smartMeter,
     meterRate,
     evCharger,
     purchase,
@@ -38,13 +40,16 @@ export default function Modal() {
     consumption,
   } = useUserSettingStore();
 
+  // dimmed 처리된 영역을 esc키로도 닫을 수 있도록 렌더링 시 focus
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     overlayRef.current?.focus();
   }, []);
+
   return (
     <>
+      {/* esc키 이벤트와 click이벤트 모두 modal을 닫도록 유도 */}
       <div
         className="bg-black/50 fixed inset-0 flex items-center justify-center"
         ref={overlayRef}
@@ -56,10 +61,12 @@ export default function Modal() {
           if (e.key === "Escape") setModalClose();
         }}
       >
+        {/* 내용을 클릭했을 때 상위 이벤트가 일어나지 않도록 방지 */}
         <div
           onClick={(e) => e.stopPropagation()}
           className="bg-modal rounded-2xl p-6 border-2 border-primary absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
         >
+          {/* 고정과 가변에 따라 데이터 변화 */}
           <p className="text-lg font-bold">
             {year + "년 " + (meterRate === "flexed" ? "가변" : "고정")} 요금제
           </p>

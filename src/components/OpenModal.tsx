@@ -10,6 +10,7 @@ export default function OpenModalButton({ year }: { year: number }) {
     setModalOpen();
   };
 
+  // 선택 버튼 컴포넌트 화 - 모달을 열기 위함
   return (
     <>
       <button

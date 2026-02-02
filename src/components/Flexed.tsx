@@ -3,10 +3,13 @@ import basicCalculate from "@/utils/BasicCalculate";
 import smartCalculate from "@/utils/SmartCalculate";
 import OpenModalButton from "./OpenModal";
 
+// 가변 요금제 리스트 렌더링
 export default function Flexed() {
   const { residents, purchase, evCharger, meterRate, consumption, knowDetail } =
     useUserSettingStore();
 
+  // 가변 요금제의 경우 평균이 120원이므로 그렇게 계산
+  // basic의 경우 index 1,2,3에 저장되어있는것을 활용
   const totalBasicFlexed =
     basicCalculate({
       residents,
@@ -18,6 +21,7 @@ export default function Flexed() {
       return acc;
     }, 0) ?? 0;
 
+  // index 6,7,8에 데이터가 저장되어있는 것을 활용
   const totalSmartFlexed =
     smartCalculate({
       consumption,
@@ -31,10 +35,12 @@ export default function Flexed() {
 
   return (
     <div>
+      {/* 사용량을 알고 있는지 체크 */}
       {consumption === 0 ||
       consumption === "0" ||
       knowDetail === "" ||
       knowDetail === "no" ? (
+        // 만약 모른다면 basic계산기 이용
         <div className="flex gap-10 items-center justify-center">
           {basicCalculate({
             residents,
@@ -70,6 +76,7 @@ export default function Flexed() {
           })}
         </div>
       ) : (
+        // 만약 사용량을 알고 있다면 smart 계산기 사용
         <div className="flex gap-10 items-center justify-center">
           {smartCalculate({
             consumption,

@@ -3,6 +3,7 @@ import basicCalculate from "@/utils/BasicCalculate";
 import smartCalculate from "@/utils/SmartCalculate";
 import OpenModalButton from "./OpenModal";
 
+// 고정 요금 리스트 렌더링
 export default function Fixed() {
   const { residents, purchase, evCharger, meterRate, consumption, knowDetail } =
     useUserSettingStore();
@@ -12,6 +13,8 @@ export default function Fixed() {
       consumption === "0" ||
       knowDetail === "" ||
       knowDetail === "no" ? (
+        // 만약 직접 입력하지 않았다면 basic계산기로 계산
+        // 이때 index 1,2,3에 데이터가 저장되어 있으므로 그것을 활용
         <div className="flex gap-10 items-center justify-center">
           {basicCalculate({
             residents,
@@ -43,6 +46,7 @@ export default function Fixed() {
           })}
         </div>
       ) : (
+        // 사용량을 알고 있다면 스마트 미터기로 계산
         <div className="flex justify-center items-center gap-10">
           {smartCalculate({
             consumption,

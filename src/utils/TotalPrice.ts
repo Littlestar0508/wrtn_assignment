@@ -12,6 +12,7 @@ type TotalPriceType = {
   knowDetail: string;
 };
 
+// 총 금액 계산하는 함수(스마트 미터기 설치 비용 제외)
 const totalPrice = ({
   meterRate,
   chk,
@@ -20,9 +21,10 @@ const totalPrice = ({
   evCharger,
   year,
   residents,
-  knowDetail,
 }: TotalPriceType) => {
+  // 고정 요금제라면
   if (meterRate === "fixed") {
+    // 사용량을 알고 있다면
     if (chk) {
       return Number(
         smartCalculate({
@@ -42,6 +44,7 @@ const totalPrice = ({
       );
     }
   } else {
+    // 가변인지? 사용량을 알고 있는지?
     if (chk) {
       return (
         Number(
