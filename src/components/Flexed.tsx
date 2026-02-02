@@ -87,7 +87,7 @@ export default function Flexed() {
                   월간 사용료 :{" "}
                   {evCharger === "yes"
                     ? Number(consumption) * 2
-                    : Number(consumption) * 75}{" "}
+                    : Number(consumption)}{" "}
                   KWh
                 </p>
                 <p>
