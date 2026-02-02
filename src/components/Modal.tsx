@@ -128,36 +128,61 @@ export default function Modal() {
             <p>관리비 : {(80000 * year * 12).toLocaleString()}원</p>
             <p>
               연간 총액 :{" "}
-              {Math.floor(
-                totalPrice({
-                  chk: chkKnowDetail(),
-                  consumption,
-                  evCharger,
-                  knowDetail,
-                  meterRate,
-                  purchase,
-                  residents,
-                  year,
-                }),
-              )?.toLocaleString()}
+              {meterRate === "fixed"
+                ? Math.floor(
+                    totalPrice({
+                      chk: chkKnowDetail(),
+                      consumption,
+                      evCharger,
+                      knowDetail,
+                      meterRate,
+                      purchase,
+                      residents,
+                      year,
+                    }),
+                  )?.toLocaleString()
+                : Math.floor(
+                    totalElectric({
+                      chk: chkKnowDetail(),
+                      residents,
+                      evCharger,
+                      consumption,
+                      year,
+                    }) *
+                      (120 + 0.2) +
+                      80000 * 12 * year,
+                  ).toLocaleString()}
               원
             </p>
             <p>
               스마트 미터기 설치 시 :{" "}
-              {(
-                Math.floor(
-                  totalPrice({
-                    chk: chkKnowDetail(),
-                    consumption,
-                    evCharger,
-                    knowDetail,
-                    meterRate,
-                    purchase,
-                    residents,
-                    year,
-                  }) ?? 0,
-                ) + 200000
-              )?.toLocaleString()}
+              {meterRate === "fixed"
+                ? (
+                    Math.floor(
+                      totalPrice({
+                        chk: chkKnowDetail(),
+                        consumption,
+                        evCharger,
+                        knowDetail,
+                        meterRate,
+                        purchase,
+                        residents,
+                        year,
+                      }) ?? 0,
+                    ) + 200000
+                  )?.toLocaleString()
+                : Math.floor(
+                    totalElectric({
+                      chk: chkKnowDetail(),
+                      residents,
+                      evCharger,
+                      consumption,
+                      year,
+                    }) *
+                      (120 + 0.2) +
+                      80000 * 12 * year +
+                      200000,
+                  ).toLocaleString()}
               원
             </p>
           </div>
