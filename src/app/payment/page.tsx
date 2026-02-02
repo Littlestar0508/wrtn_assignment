@@ -1,6 +1,7 @@
 "use client";
 
 import Fixed from "@/components/Fixed";
+import Flexed from "@/components/Flexed";
 import RadioGroup from "@/components/RadioGroup";
 import { useUserSettingStore } from "@/store/useUserSettingStore";
 
@@ -35,7 +36,7 @@ export default function Payment() {
       ) : meterRate === "fixed" ? (
         <Fixed />
       ) : (
-        <div className="pt-4">가변 요금제 영역</div>
+        <Flexed />
       )}
       <div>모달영역</div>
     </>
