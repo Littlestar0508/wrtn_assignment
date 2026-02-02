@@ -1,7 +1,42 @@
+"use client";
+
+import RadioGroup from "@/components/RadioGroup";
+import { useUserSettingStore } from "@/store/useUserSettingStore";
+
 export default function Payment() {
+  const { meterRate, setMeterRate } = useUserSettingStore();
+
   return (
     <>
-      <div>결제 페이지입니다.</div>
+      <RadioGroup
+        name="meterRate"
+        legend="원하시는 요금제를 선택해주시기 바랍니다."
+        options={[
+          { value: "fixed", label: "고정 요금제" },
+          { value: "flexed", label: "가변 요금제" },
+        ]}
+        ariaLabel="요금제 선택"
+        children={
+          <>
+            <p
+              className={`font-bold ${meterRate === "flexed" ? "visible" : "invisible"}`}
+            >
+              가변 요금제의 경우 스마트 미터기가 설치되어 있어야 합니다.
+            </p>
+
+            {meterRate === "" ? (
+              <p className="font-bold py-4">요금제를 선택해주시기 바랍니다.</p>
+            ) : meterRate === "fixed" ? (
+              <div className="pt-4">고정 요금제 영역</div>
+            ) : (
+              <div className="pt-4">가변 요금제 영역</div>
+            )}
+            <div>모달영역</div>
+          </>
+        }
+        onChange={setMeterRate}
+        value={meterRate}
+      />
     </>
   );
 }
